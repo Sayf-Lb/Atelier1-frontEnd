@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 30px;
+        }
+
+        #postList {
+            margin-top: 20px;
+        }
+
+        .post {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .post p {
+            margin-bottom: 10px;
+        }
+
+        .post p:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mini Blog</h1>
+        <form id="postForm">
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="postContent">Post Content:</label>
+                <textarea class="form-control" id="postContent" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Post</button>
+        </form>
+        <hr>
+        <div id="postList"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        // Define Post class
+        class Post {
+            constructor(username, content) {
+                this.username = username;
+                this.content = content;
+                this.timestamp = new Date().toLocaleString();
+            }
+
+            toJSON() {
+                return {
+                    username: this.username,
+                    content: this.content,
+                    timestamp: this.timestamp
+                };
+            }
+        }
+
+        // Array to store posts
+        let posts = [];
+
+        // Function to display posts
+        function displayPosts() {
+            const postList = document.getElementById('postList');
+            postList.innerHTML = '';
+            posts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.classList.add('post');
+                postElement.innerHTML = `
+                    <p><strong>${post.username}</strong> (${post.timestamp}):</p>
+                    <p>${post.content}</p>
+                `;
+                postList.appendChild(postElement);
+            });
+        }
+
+        // Event listener for form submission
+        document.getElementById('postForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const content = document.getElementById('postContent').value;
+            const newPost = new Post(username, content);
+            posts.push(newPost.toJSON());
+            displayPosts();
+            document.getElementById('postForm').reset();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>vecteur</title>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- CSS personnalisé -->
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .output {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-5">Vecteur2D</h1>
+
+    <div id="output" class="output">
+      <!-- Les résultats seront affichés ici -->
+    </div>
+  </div>
+
+<!-- Bootstrap JS (Optional) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Définition de la classe Vecteur2D
+  class Vecteur2D {
+    constructor(x = 0, y = 0) {
+      this.x = x;
+      this.y = y;
+    }
+
+    // Méthode d'affichage
+    afficher() {
+      return `Vecteur2D: x = ${this.x}, y = ${this.y}`;
+    }
+
+    // Méthode de surcharge d'addition
+    additionner(vecteur) {
+      return new Vecteur2D(this.x + vecteur.x, this.y + vecteur.y);
+    }
+  }
+
+  // Définition de la classe Rectangle
+  class Rectangle {
+    constructor(longueur = 0, largeur = 0) {
+      this.longueur = longueur;
+      this.largeur = largeur;
+      this.nom = "rectangle";
+    }
+
+    // Méthode d'affichage
+    afficher() {
+      return `Rectangle: longueur = ${this.longueur}, largeur = ${this.largeur}`;
+    }
+
+    // Méthode de calcul de la surface
+    surface() {
+      return this.longueur * this.largeur;
+    }
+  }
+
+  // Définition de la classe Carre héritant de Rectangle
+  class Carre extends Rectangle {
+    constructor(cote = 0) {
+      super(cote, cote);
+      this.nom = "carré";
+    }
+  }
+
+  // Définition de la classe Point
+  class Point {
+    constructor(x = 0, y = 0) {
+      this.x = x;
+      this.y = y;
+    }
+  }
+
+  // Définition de la classe Segment
+  class Segment {
+    constructor(origine, extremite) {
+      this.origine = origine;
+      this.extremite = extremite;
+    }
+  }
+
+  // Programme principal
+  const outputElement = document.getElementById('output');
+
+  // Instanciation de Vecteur2D sans paramètre
+  const vecteur1 = new Vecteur2D();
+  outputElement.innerHTML += `<p>${vecteur1.afficher()}</p>`;
+
+  // Instanciation de Vecteur2D avec ses deux paramètres
+  const vecteur2 = new Vecteur2D(2, 3);
+  outputElement.innerHTML += `<p>${vecteur2.afficher()}</p>`;
+
+  // Affichage de leur somme
+  const sommeVecteurs = vecteur1.additionner(vecteur2);
+  outputElement.innerHTML += `<p>Somme des vecteurs: ${sommeVecteurs.afficher()}</p>`;
+
+  // Instanciation de Rectangle
+  const rectangle = new Rectangle(4, 5);
+  outputElement.innerHTML += `<p>${rectangle.afficher()}</p>`;
+  outputElement.innerHTML += `<p>Surface du rectangle: ${rectangle.surface()}</p>`;
+
+  // Instanciation de Carre
+  const carre = new Carre(3);
+  outputElement.innerHTML += `<p>${carre.afficher()}</p>`;
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liste des Voitures</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .car-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .car-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+
+  .car-item:last-child {
+    border-bottom: none;
+  }
+
+  .car-info {
+    font-weight: bold;
+  }
+
+  .car-model {
+    color: #007bff;
+  }
+
+  .car-brand {
+    color: #28a745;
+  }
+
+  .car-year {
+    color: #dc3545;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>Liste des Voitures</h1>
+  <ul class="car-list" id="carList">
+    <!-- Les voitures seront ajoutées ici dynamiquement par JavaScript -->
+  </ul>
+</div>
+<script>
+  // Votre code JavaScript pour générer la liste des voitures ici
+ // 1. Définition de la fonction constructrice Voiture
+function Voiture(model, marque, année, type, carburant) {
+    this.model = model;
+    this.marque = marque;
+    this.année = année;
+    this.type = type;
+    this.carburant = carburant;
+}
+
+// 2. Création d'une liste des voitures
+let voitures = [
+    new Voiture("SUV", "Hyundai", 2019, "SUV", "Essence"),
+    new Voiture("i30", "Hyundai", 2018, "Compacte", "Diesel"),
+    new Voiture("Fiesta", "Ford", 2020, "Citadine", "Essence"),
+    new Voiture("Focus", "Ford", 2017, "Compacte", "Essence"),
+];
+
+// 3. Implémentation du mécanisme d'héritage entre la fonction constructrice Voiture et les fonctions constructrices Hyundai et Ford
+function Hyundai(model, année, type, carburant, série, hybride) {
+    Voiture.call(this, model, "Hyundai", année, type, carburant);
+    this.série = série;
+    this.hybride = hybride;
+}
+
+Hyundai.prototype = Object.create(Voiture.prototype);
+Hyundai.prototype.constructor = Hyundai;
+
+Hyundai.prototype.alarmer = function() {
+    console.log("Alarme activée pour la Hyundai " + this.model);
+};
+
+function Ford(model, année, type, carburant, options) {
+    Voiture.call(this, model, "Ford", année, type, carburant);
+    this.options = options;
+}
+
+Ford.prototype = Object.create(Voiture.prototype);
+Ford.prototype.constructor = Ford;
+
+// 4. Trier puis afficher les voitures selon un ordre croissant des années
+voitures.sort((a, b) => a.année - b.année);
+console.log("Liste des voitures triées par année croissante :");
+voitures.forEach(voiture => console.log(voiture));
+
+  let carList = document.getElementById('carList');
+  voitures.forEach(voiture => {
+    let listItem = document.createElement('li');
+    listItem.classList.add('car-item');
+    listItem.innerHTML = `
+      <div class="car-info">Modèle: <span class="car-model">${voiture.model}</span></div>
+      <div class="car-info">Marque: <span class="car-brand">${voiture.marque}</span></div>
+      <div class="car-info">Année: <span class="car-year">${voiture.année}</span></div>
+      <div class="car-info">Type: ${voiture.type}</div>
+      <div class="car-info">Carburant: ${voiture.carburant}</div>
+    `;
+    carList.appendChild(listItem);
+  });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
